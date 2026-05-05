@@ -8,8 +8,8 @@ import dotenv from "dotenv"
 const app = express()
 app.use(express.json())
 
+// connect mongodb
 const mongoURI = process.env.MONGO_URI
-
 mongoose.connect(mongoURI).then(() => {
     console.log("MongoDB connected successfully now")
 })
