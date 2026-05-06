@@ -1,19 +1,30 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import dotenv from "dotenv"
- dotenv.config()
+import express from 'express';
+import mongoose from 'mongoose';
+import UserRouter from './modules/User/User.routes.js';
+import ProductRouter from './modules/Product/product.routes.js';
+import dotenv from "dotenv";
 
+dotenv.config();
 
+const app = express();
+app.use(express.json());
 
-const app = express()
-app.use(express.json())
-
-// connect mongodb
-const mongoURI = process.env.MONGO_URI
+// 1. Connect MongoDB
+const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI).then(() => {
-    console.log("MongoDB connected successfully now")
-})
+    console.log("MongoDB connected successfully now");
+}).catch((err) => {
+    console.log("MongoDB connection failed:", err);
+});
 
-app.listen(3000, () => {
-    console.log("Server started on port 3000")
-})
+app.use("/Users", UserRouter);
+app.use("/products", ProductRouter);
+
+// 3. Server Start
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
+});
+
+
+
