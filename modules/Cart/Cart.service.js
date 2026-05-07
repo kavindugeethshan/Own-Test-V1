@@ -27,7 +27,7 @@ export const addToCart = async (UserId, ProductId, quantity) => {
 
         //if product have not add to the cart then add new array of product to the cart
     } else{
-         Cart.items.push ({ProductId,quantity,Price};
+         Cart.items.push ({ProductId,quantity,Price}
          )
     }
 
