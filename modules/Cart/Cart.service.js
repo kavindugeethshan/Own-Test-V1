@@ -54,7 +54,7 @@ export const addToCart = async (userId, productCode, quantity) => {
 
 
   //watch the User Cart 
-const getUserCart = async (userId) => {
+export const getUserCart = async (userId) => {
   try {
     // find cart and populate product details
     const cart = await Cart.findOne({ userId }).populate({
