@@ -6,26 +6,23 @@ import { addToCart } from "./Cart.service.js";
  */
 export const addToCartController = async (req, res) => {
   try {
-    const { UserId, ProductId, quantity } = req.body;
+    const { productCode, quantity } = req.body;
+    const userId = req.user._id || req.user.id;
 
-    if (!UserId || !ProductId) {
-      return res
-        .status(400)
-        .json({ message: "UserId and ProductId are required" });
+    if (!productCode) {
+      return res.status(400).json({ message: "productCode is required" });
     }
 
     const qty = Number(quantity);
     if (!Number.isFinite(qty) || qty < 1) {
-      return res
-        .status(400)
-        .json({ message: "quantity must be a number >= 1" });
+      return res.status(400).json({ message: "quantity must be a number >= 1" });
     }
 
-    const cart = await addToCart(UserId, ProductId, qty);
-    return res.status(200).json({ message: "Added to cart", cart });
+    const cart = await addToCart(userId, productCode, qty);
+    return res.status(200).json({ message: "Item added to cart", cart });
   } catch (error) {
     return res.status(500).json({
-      message: error?.message || "Internal service error",
+      message: error?.message || "Internal server error",
     });
   }
 };

@@ -72,6 +72,11 @@ const productSchema = new mongoose.Schema(
         model: {
             type: String,
             required: false
+        },
+        productCode: {
+            type: String,
+            required: true,
+            unique: true,  // P001, P002, P003...
         }
     },
     { timestamps: true }

@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import UserRouter from './modules/User/User.routes.js';
 import ProductRouter from './modules/Product/product.routes.js';
+import CartRotes from "./modules/Cart/Cart.routes.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -19,6 +20,7 @@ mongoose.connect(mongoURI).then(() => {
 
 app.use("/Users", UserRouter);
 app.use("/products", ProductRouter);
+app.use("/Cart", CartRotes)
 
 // 3. Server Start
 const PORT = process.env.PORT;

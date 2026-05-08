@@ -1,43 +1,50 @@
-import Cart from "./Cart.model";
-import Product from "../Product/Product.model";
+import Cart from "./Cart.model.js";
+import Product from "../Product/product.modell.js";
 
-export const addToCart = async (UserId, ProductId, quantity) => {
+export const addToCart = async (userId, productCode, quantity) => {
   try {
+    // fetch the product to get the price
+    const product = await Product.findOne({ ProductId: productCode });
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    const productId = product._id;
+    const price = product.price;
+
     //check if have cart for the User
-    let Cart = await Cart.findone({ UserId });
+    let cart = await Cart.findOne({ userId });
 
     //if have not cart crate new cart for the user
-    if (!Cart) {
+    if (!cart) {
       const newCart = new Cart({
-        UserId,
-        items: [{ ProductId, quantity, price }],
-        totalPrice: Price * quantity,
+        userId,
+        items: [{ productId: productId, quantity, price }],
+        totalPrice: price * quantity,
       });
       return await newCart.save();
     }
 
     //if cart have  and  product exist in the cart
-    const itemIndex = Cart.items.findIndex(
-      (item) => item.productId.toString() == ProductId,
+    const itemIndex = cart.items.findIndex(
+      (item) => item.productId.toString() === productId.toString()
     );
 
     //if product have then update the quantity and total price
-    if(itemIndex > -1){
-        Cart.items[itemIndex].quantity += quantity;
-
-        //if product have not add to the cart then add new array of product to the cart
-    } else{
-         Cart.items.push ({ProductId,quantity,Price}
-         )
+    if (itemIndex > -1) {
+      cart.items[itemIndex].quantity += quantity;
+      //if product have not add to the cart then add new array of product to the cart
+    } else {
+      cart.items.push({ productId: productId, quantity, price });
     }
 
     //lets calculate the total price of the cart
-    Cart.totalPrice = Cart.items.reduce(
-        (total,items) => total + items.price * items.quantity,0
+    cart.totalPrice = cart.items.reduce(
+      (total, item) => total + item.price * item.quantity, 0
     );
 
     //save the update cart
-return await Cart.save();
+    return await cart.save();
 
   } catch (error) {
     throw error;
