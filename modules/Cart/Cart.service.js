@@ -52,3 +52,27 @@ export const addToCart = async (userId, productCode, quantity) => {
 };
 
 
+
+  //watch the User Cart 
+const getUserCart = async (userId) => {
+  try {
+    // find cart and populate product details
+    const cart = await Cart.findOne({ userId }).populate({
+      path: "items.productId",
+      select: "name images ProductId",
+    });
+
+    // if no cart found
+    if (!cart) {
+      return {
+        userId,
+        items: [],
+        totalPrice: 0,
+      };
+    }
+
+    return cart;
+  } catch (error) {
+    throw error;
+  }
+};
