@@ -119,3 +119,28 @@ export const removeFromCart = async (userId, productCode) => {
     throw error;
   }
 };
+
+
+//Update-Cart.service.js - remove all  items from the Cart
+//Update-Cart.service.js - remove all items from the Cart
+
+export const clearCart = async (userId) => {
+  try {
+
+    let cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      throw new Error("Cart not found for the user");
+    }
+
+    //empty the items array and set total price to 0
+    cart.items = [];
+    cart.totalPrice = 0;
+
+    //save the updated cart
+    return await cart.save();
+
+  } catch (error) {
+    throw error;
+  }
+};
