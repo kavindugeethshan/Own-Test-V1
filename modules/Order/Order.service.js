@@ -1,12 +1,12 @@
-import Order from "./Order.model";
-import Cart from "../Cart/Cart.model";
-import { clearCart } from "../Cart/Cart.service";
+import Order from "./Order.model.js";
+import Cart from "../Cart/Cart.model.js";
+import { clearCart } from "../Cart/Cart.service.js";    
 
 //Function for creating a new order
 export const placeOrder = async (userId, shipingAddress, paymentMethod) => {
   try {
     //find the user cart and populate the product name and price
-    const cart = await Cart.findOne({ UserId }).populate({
+    const cart = await Cart.findOne({ UserId: userId }).populate({
       path: "items.ProductId",
       select: "name price",
     });
@@ -38,7 +38,7 @@ export const placeOrder = async (userId, shipingAddress, paymentMethod) => {
 
     //save the new order in db 
     const newOrder =new Order({
-        userId
+        userId,
         items:orderItems,
         shipingAddress,
         paymentMethod,
@@ -53,7 +53,7 @@ export const placeOrder = async (userId, shipingAddress, paymentMethod) => {
     await clearCart(userId);
     return newOrder;
 
-    
+
   } catch (error) {
     throw error;
   }
