@@ -4,29 +4,29 @@ import { placeOrder } from "./Order.service.js";
 export const placeOrderController =async (req,res) =>{
     try{
        // get id from token
-       const userId = res.user._id;
+       const userId = req.user._id || req.user.id;
 
-       //get shiping and payment details from the body
-       const {shipingAddress,paymentMethod} = req.body;
+       //get shipping and payment details from the body
+       const {shippingAddress,paymentMethod} = req.body;
 
-       // validation for everything in adress 
+       // validation for everything in address 
        if(
-        !shipingAddress ||
-        !shipingAddress.address ||
-        !shipingAddress.city ||
-        !shipingAddress.postalCode ||
-        !shipingAddress.phone
+        !shippingAddress ||
+        !shippingAddress.address ||
+        !shippingAddress.city ||
+        !shippingAddress.postalCode ||
+        !shippingAddress.phone
        
        ){
         return res.status(400).json({
             success:false,
-            message:"please provide complete shiping address details"
+            message:"please provide complete shipping address details"
         });
        }
 
 
        //if does not select the payment method and get default card and send service
-       const order = await placeOrder(userId,shipingAddress,paymentMethod || "card");
+       const order = await placeOrder(userId,shippingAddress,paymentMethod || "card");
 
        return res.status(201).json({
         success:true,

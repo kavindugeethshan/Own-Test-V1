@@ -37,8 +37,7 @@ http://localhost:3000/Users/register
 
 
 token + admin
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZmI3YTM1OTA5MmI4NDE0MGVkYTA4MiIsImVtYWlsIjoia2F2aW5kdTRAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiS2F2aW5kdSIsImxhc3ROYW1lIjoiR2VldGhzaGFuIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzc4MDg4NTMzfQ.uUG6tXV4ai60NcGBJ8wpKuC2jCkLZPuCJrJYaI9HVr8
-
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZmUyZTZjOWRiZTFhNWQwOTQyYWY4MCIsImVtYWlsIjoia2F2aW5kdTVAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiS2F2aW5kdSIsImxhc3ROYW1lIjoiR2VldGhzaGFuIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzc4MjY1NzE3fQ.nebTV04w45UGdMgOYgeiC1oOoe4k7NFtHoTtJfseWug
 
 
 
@@ -91,3 +90,13 @@ http://localhost:3000/Cart/clear  + token
 
 checkout cart + POST
 http://localhost:3000/Orders/place + token 
+
+{
+  "shippingAddress": {
+    "address": "123, Main Street",
+    "city": "Colombo",
+    "postalCode": "00300",
+    "phone": "0771234567"
+  },
+  "paymentMethod": "Card"
+}
