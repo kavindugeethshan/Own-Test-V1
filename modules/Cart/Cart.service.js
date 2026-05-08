@@ -139,6 +139,11 @@ export const clearCart = async (userId) => {
     //save the updated cart
     return await cart.save();
 
+
+
+
+
+    
   } catch (error) {
     throw error;
   }

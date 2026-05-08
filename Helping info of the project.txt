@@ -1,0 +1,89 @@
+{
+  "ProductId": "P001",
+  "name": "Nike Shoes",
+  "alternateName": ["Nike Running"],
+  "description": "Best running shoes",
+  "price": 12000,
+  "labelPrice": 15000,
+  "isAvailable": true,
+  "category": "Shoes",
+  "brand": "Nike",
+  "stock": 50
+}
+
+
+Register + POST
+http://localhost:3000/Users/register
+
+{
+  "email": "kavindu4@gmail.com",
+  "firstName": "Kavindu",
+  "lastName": "Geethshan",
+  "password": "123456",
+  "isAdmin": true
+}
+
+
+login + POST
+http://localhost:3000/Users/register
+
+{
+  "email": "kavindu4@gmail.com",
+  "firstName": "Kavindu",
+  "lastName": "Geethshan",
+  "password": "123456",
+  "isAdmin": true
+}
+
+
+token + admin
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZmI3YTM1OTA5MmI4NDE0MGVkYTA4MiIsImVtYWlsIjoia2F2aW5kdTRAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiS2F2aW5kdSIsImxhc3ROYW1lIjoiR2VldGhzaGFuIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzc4MDg4NTMzfQ.uUG6tXV4ai60NcGBJ8wpKuC2jCkLZPuCJrJYaI9HVr8
+
+
+
+
+
+product add  + POST
+http://localhost:3000/Products/add
+
+{
+  "ProductId": "P002",
+  "productCode": "P002",
+  "name": "Nike Air Max 2024",
+  "alternateName": ["Nike Running Shoes", "Air Max"],
+  "description": "High-performance running shoes with great cushioning.",
+  "price": 12000,
+  "labelPrice": 15000,
+  "isAvailable": true,
+  "category": "Shoes",
+  "brand": "Nike",
+  "stock": 50,
+  "model": "Air Max"
+}
+
+
+product get all + GET
+http://localhost:3000/Products/all   
+
+
+
+Add to Cart + POST
+ http://localhost:3000/Cart/add   + token
+{
+  "productCode": "P003",
+  "quantity": 3
+}
+
+
+User Cart (User ගේ Cart එක බලාගැනීම)  + GET
+ http://localhost:3000/Cart  + token 
+
+
+
+Remove Item + DELETE
+ http://localhost:3000/Cart/remove/P006  + token 
+
+
+Clear Cart + DELETE
+http://localhost:3000/Cart/clear  + token 
+
