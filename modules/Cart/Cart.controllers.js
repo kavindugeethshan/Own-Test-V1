@@ -1,5 +1,5 @@
 import express from "express";
-import { addToCart, getUserCart } from "./Cart.service.js";
+import { addToCart, getUserCart, removeFromCart } from "./Cart.service.js";
 
 /**
  * POST /cart/add
@@ -37,7 +37,7 @@ Header :Authentication Bearer token
 
 export const getUserCartController = async (req, res) => {
   try {
-    // get user id from token 
+    // get user id from token
     const userId = req.user._id || req.user.id;
 
     //get the cart for the user
@@ -45,13 +45,42 @@ export const getUserCartController = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      cart
+      cart,
     });
-
   } catch (error) {
     return res.status(500).json({
       success: false,
       message: error?.message || "Internal server error",
+    });
+  }
+};
+
+/* DELETE /cart/remove/:productCode
+ * Header: Authorization Bearer Token
+ */
+export const removeFromCartController = async (req, res) => {
+  try {
+    //get the productcode from params
+    const {productCode} = req.params;
+
+    //get the user id from token 
+    const userId = req.user._id || req.user.id;
+
+    //remove the item from cart
+    const cart = await removeFromCart(userId, productCode);
+    
+    return res.status(200).json({
+      success: true,
+      message:"Item removed from the cart successfully",
+      cart
+    })
+
+
+    
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error?.message || "Internal service error",
     });
   }
 };
