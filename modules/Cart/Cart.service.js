@@ -76,3 +76,46 @@ export const getUserCart = async (userId) => {
     throw error;
   }
 };
+
+
+
+
+
+//remove from cart
+export const removeFromCart = async (userId, productCode) => {
+  try {
+
+    // find the product from the productcode
+    const product = await Product.findOne({ ProductId: productCode });
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    const productId = product._id;
+
+    //find the cart of the user
+    let cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      throw new Error("Cart not found for the user");
+    }
+
+    //get the all items in one array without the product which want to Remove
+    cart.items = cart.items.filter(
+      (item) => item.productId.toString() !== productId.toString()
+    );
+
+    //calculate the total price of the cart after remove the product
+    cart.totalPrice = cart.items.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+
+    //Update the cart after remove the product
+    return await cart.save();
+
+  } catch (error) {
+    throw error;
+  }
+};
