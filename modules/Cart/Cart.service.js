@@ -121,7 +121,6 @@ export const removeFromCart = async (userId, productCode) => {
 };
 
 
-//Update-Cart.service.js - remove all  items from the Cart
 //Update-Cart.service.js - remove all items from the Cart
 
 export const clearCart = async (userId) => {

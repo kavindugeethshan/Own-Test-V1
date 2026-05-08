@@ -1,5 +1,10 @@
 import express from "express";
-import { addToCart, getUserCart, removeFromCart } from "./Cart.service.js";
+import {
+  addToCart,
+  getUserCart,
+  removeFromCart,
+  clearCart,
+} from "./Cart.service.js";
 
 /**
  * POST /cart/add
@@ -61,22 +66,43 @@ export const getUserCartController = async (req, res) => {
 export const removeFromCartController = async (req, res) => {
   try {
     //get the productcode from params
-    const {productCode} = req.params;
+    const { productCode } = req.params;
 
-    //get the user id from token 
+    //get the user id from token
     const userId = req.user._id || req.user.id;
 
     //remove the item from cart
     const cart = await removeFromCart(userId, productCode);
-    
+
     return res.status(200).json({
       success: true,
-      message:"Item removed from the cart successfully",
-      cart
-    })
+      message: "Item removed from the cart successfully",
+      cart,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error?.message || "Internal service error",
+    });
+  }
+};
 
+/**
+ * DELETE /cart/remove all
+ * Header: Authorization Bearer Token
+ */
+export const clearCartController = async (req, res) => {
+  try {
+    const userId = req.user._id || req.user.id;
 
-    
+    // clear the cart using the service function
+    const cart = await clearCart(userId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Cart cleared successfully",
+      cart,
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
